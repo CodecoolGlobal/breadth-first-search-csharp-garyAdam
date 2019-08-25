@@ -21,6 +21,13 @@ namespace BFS_c_sharp
             }
             Console.WriteLine(GetDistance(users[0], users[2]));
             Console.WriteLine("Done");
+
+            var friends = GetFriendsOfFriends(users[0], 2);
+            foreach (var item in friends)
+            {
+                Console.WriteLine(item);
+            }
+
             Console.ReadKey();
         }
 
@@ -53,6 +60,39 @@ namespace BFS_c_sharp
 
 
             return -1;
+        }
+
+        static HashSet<UserNode> GetFriendsOfFriends(UserNode userNode1, int distance)
+        {
+            HashSet<UserNode> result = new HashSet<UserNode>();
+
+            Queue<UserNode> userNodes = new Queue<UserNode>();
+            userNodes.Enqueue(userNode1);
+            int counter = 0;
+            while (counter < distance+1)
+            {
+                UserNode userNode = userNodes.Dequeue();
+                foreach (var item in userNode.Friends)
+                {
+                    if (item != userNode.parent)
+                    {
+                        userNodes.Enqueue(item);
+                        item.parent = userNode;
+                        if (counter==distance-1)
+                        {
+                            result.Add(item);
+                        }
+
+                    }
+                }
+                if (userNode.parent != userNodes.Peek().parent)
+                {
+                    counter++;
+                }
+            }
+
+
+            return result;
         }
     }
 }
