@@ -19,7 +19,7 @@ namespace BFS_c_sharp
                     Console.WriteLine(item);
                 }
             }
-            Console.WriteLine(GetDistance(users[0],users[2]));
+            Console.WriteLine(GetDistance(users[0], users[2]));
             Console.WriteLine("Done");
             Console.ReadKey();
         }
@@ -29,18 +29,26 @@ namespace BFS_c_sharp
             Queue<UserNode> userNodes = new Queue<UserNode>();
             userNodes.Enqueue(userNode1);
             int counter = 0;
-            while (userNodes.Count>0)
+            while (userNodes.Count > 0)
             {
                 UserNode userNode = userNodes.Dequeue();
-                if (userNode==userNode2)
+                if (userNode == userNode2)
                 {
                     return counter;
                 }
                 foreach (var item in userNode.Friends)
                 {
-                    userNodes.Enqueue(item);
+                    if (item != userNode.parent)
+                    {
+
+                        userNodes.Enqueue(item);
+                        item.parent = userNode;
+                    }
                 }
-                counter++;
+                if (userNode.parent != userNodes.Peek().parent)
+                {
+                    counter++;
+                }
             }
 
 

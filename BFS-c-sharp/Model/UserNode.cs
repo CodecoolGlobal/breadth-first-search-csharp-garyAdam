@@ -7,6 +7,7 @@ namespace BFS_c_sharp.Model
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public UserNode parent { get; set; }
         private readonly HashSet<UserNode> _friends = new HashSet<UserNode>();
 
         public HashSet<UserNode> Friends
